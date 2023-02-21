@@ -1,0 +1,45 @@
+{
+  "name": "tarawa-hotel",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3002",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.4.9",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@feathersjs/feathers": "^4.5.15",
+    "@feathersjs/rest-client": "^4.5.15",
+    "@n8tb1t/use-scroll-position": "^2.0.3",
+    "@next/font": "13.1.6",
+    "@svgr/webpack": "^6.5.1",
+    "eslint": "8.33.0",
+    "eslint-config-next": "13.1.6",
+    "feathers-hooks-common": "^6.1.5",
+    "framer-motion": "^9.0.1",
+    "lodash.debounce": "^4.0.8",
+    "mime-types": "^2.1.35",
+    "next": "13.1.6",
+    "next-videos": "^1.4.1",
+    "node-fetch": "^2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-intersection-observer": "^9.4.2",
+    "react-lottie": "^1.2.3",
+    "react-scroll-parallax": "^3.3.2",
+    "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "@types/lodash.debounce": "^4.0.7",
+    "@types/mime-types": "^2.1.1",
+    "@types/node": "18.11.18",
+    "@types/node-fetch": "^2.6.2",
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
+    "@types/react-lottie": "^1.2.6"
+  }
+}
