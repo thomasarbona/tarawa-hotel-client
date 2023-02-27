@@ -18,10 +18,6 @@ export type PublishLocation =
 
 export type NewsSocialMedia = 'FACEBOOK' | 'INSTAGRAM';
 
-export type TranslatedStrings = {
-  [key in Language]?: string;
-};
-
 export type Rubric =
   | 'STAY'
   | 'RESTAURANT'
@@ -220,8 +216,8 @@ export interface AccordionComponentData {
 
 export interface CarouselComponentSlide {
   id: string;
-  title: TranslatedStrings;
-  subtitle: TranslatedStrings;
+  title: KustomTranslatedStrings;
+  subtitle: KustomTranslatedStrings;
   atomicComponents: AtomicComponent[];
   medias: KustomResponsiveMedia;
 }

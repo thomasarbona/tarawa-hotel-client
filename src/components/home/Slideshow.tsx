@@ -53,12 +53,6 @@ const Slideshow: React.FC<SlideshowProps> = (props) => {
             const text = slide.atomicComponents[0] as Text;
             const media2 = slide.atomicComponents[1] as MediaComponent;
 
-            console.log(
-              slides.length - 1,
-              index,
-              index === slides.length - 1 ? 'row-reverse' : undefined,
-            );
-
             return (
               <Box
                 key={slide.id}
