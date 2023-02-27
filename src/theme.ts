@@ -1,9 +1,15 @@
 import chakraTheme from '@chakra-ui/theme';
 import { extendBaseTheme } from '@chakra-ui/react';
 
-const { Button, Drawer } = chakraTheme.components;
+const { Button, Drawer, Container } = chakraTheme.components;
 
 const theme = extendBaseTheme({
+  semanticTokens: {
+    colors: {
+      'chakra-body-text': { _light: 'black' },
+      // 'chakra-placeholder-color': { _light: 'black' },
+    },
+  },
   fonts: {
     heading: `'SamsungOne', sans-serif`,
     body: `'Samsung Sharp Sans', sans-serif`,
@@ -17,6 +23,7 @@ const theme = extendBaseTheme({
     gray: {
       100: '#F9F9F9',
       200: '#e4e4e4',
+      500: '#707070',
       800: '#3B3B3B',
     },
   },
@@ -29,7 +36,16 @@ const theme = extendBaseTheme({
     },
   },
   components: {
-    Drawer,
+    ...chakraTheme.components,
+    Drawer: {
+      ...Drawer,
+    },
+    Container: {
+      ...Container,
+      baseStyle: {
+        ...Container.baseStyle,
+      },
+    },
     Button: {
       ...Button,
       baseStyle: {
@@ -37,11 +53,17 @@ const theme = extendBaseTheme({
         fontWeight: '500',
         fontSize: '16px',
         borderRadius: '3px',
+        maxWidth: '100%',
+        // overflow: 'hidden',
+        // whiteSpace: 'nowrap',
+        // textOverflow: 'ellipsis',
+        // display: 'block',
       },
     },
     Text: {
       baseStyle: {
         color: 'gray.800',
+        overflowWrap: 'break-word',
       },
     },
   },

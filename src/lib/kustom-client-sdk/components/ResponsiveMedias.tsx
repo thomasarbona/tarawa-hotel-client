@@ -1,3 +1,4 @@
+import React from 'react';
 import Image, { ImageProps } from 'next/image';
 import { Box } from '@chakra-ui/react';
 
@@ -6,11 +7,15 @@ import { KustomMedia, KustomResponsiveMedia } from '../types';
 
 interface ResponsiveMediasProps extends Partial<ImageProps> {
   medias: KustomResponsiveMedia;
+  style?: any;
   currentDevice: keyof KustomResponsiveMedia;
 }
 
-const ResponsiveMedias = (props: ResponsiveMediasProps) => {
-  const { medias, currentDevice, ...imageProps } = props;
+const ResponsiveMedias = (
+  props: ResponsiveMediasProps,
+  ref: React.ForwardedRef<HTMLVideoElement | HTMLImageElement>,
+) => {
+  const { medias, currentDevice, style, ...imageProps } = props;
 
   const media = (medias[currentDevice] as KustomMedia) || medias.default;
 
@@ -19,6 +24,7 @@ const ResponsiveMedias = (props: ResponsiveMediasProps) => {
   if (isVideo) {
     return (
       <video
+        ref={ref as React.RefObject<HTMLVideoElement>}
         autoPlay
         loop
         muted
@@ -26,6 +32,7 @@ const ResponsiveMedias = (props: ResponsiveMediasProps) => {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
+          ...style,
         }}
       >
         <source src={media.url} type="video/mp4" />
@@ -35,13 +42,15 @@ const ResponsiveMedias = (props: ResponsiveMediasProps) => {
 
   return (
     <Image
+      ref={ref as React.RefObject<HTMLImageElement>}
       alt="media"
       src={media.url}
       width={+(media.metadata.width || '')}
       height={+(media.metadata.height || '')}
+      style={style}
       {...imageProps}
     />
   );
 };
 
-export default ResponsiveMedias;
+export default React.forwardRef(ResponsiveMedias);

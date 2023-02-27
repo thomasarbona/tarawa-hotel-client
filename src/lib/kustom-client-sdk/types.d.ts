@@ -4,6 +4,139 @@ export interface KustomTranslatedStrings {
   es?: string;
 }
 
+export type NewsAction =
+  | 'LINK_TO_BE'
+  | 'LINK_EXTERNAL'
+  | 'LINK_INTERNAL'
+  | 'EMAIL';
+
+export type PublishLocation =
+  | 'OFFERS_NEWS_PAGE'
+  | 'VIP_OFFERS_PAGE'
+  | 'SPOTLIGHT_OFFER'
+  | 'HSP_MODULE';
+
+export type NewsSocialMedia = 'FACEBOOK' | 'INSTAGRAM';
+
+export type TranslatedStrings = {
+  [key in Language]?: string;
+};
+
+export type Rubric =
+  | 'STAY'
+  | 'RESTAURANT'
+  | 'SPA'
+  | 'SEMINARS'
+  | 'WEDDINGS'
+  | 'NONE';
+
+export type Theme =
+  | 'LAST_MINUTE'
+  | 'EARLY_BOOKING'
+  | 'PROMOTION'
+  | 'PACKAGE'
+  | 'GIFT_BOX'
+  | 'NONE';
+
+export interface News {
+  _id?: string;
+  title?: KustomTranslatedStrings;
+  shortDescription?: KustomTranslatedStrings;
+  description?: KustomTranslatedStrings;
+  medias?: KustomMedia[];
+  isButtonDisabled: boolean;
+  buttonLabel?: string;
+  buttonAction?: NewsAction;
+  buttonActionString: string;
+  establishmentsIds: string[];
+  location: PublishLocation[];
+  socialMedias: NewsSocialMedia[];
+  isModel: boolean;
+  isSuspended: boolean;
+  createdAt?: string;
+  extraData?: ExtraData;
+}
+
+export type DiscountDisplay = 'REGULAR' | 'WITH_PERCENTAGE';
+
+export type FlashSaleTimeUnit = 'HOURS' | 'DAYS' | 'WEEKS' | 'MONTHS';
+
+export type ValidityPeriodModel = 'FROMTO' | 'FROM' | 'TO';
+
+export type ActivePeriodModel = 'ALWAYS' | 'SET_DATES';
+
+export type ActivePeriodSetDatesModel = 'FROM' | 'FROMTO' | 'DAYS';
+
+export type ActivePeriodDayTimeSlot = { from: Date; to: Date };
+
+export type ActivePeriodDay = {
+  dayIndex: number;
+  timeSlots: ActivePeriodDayTimeSlot[];
+};
+
+export const offersNewsStatusValues = [
+  { value: 'EXPIRED', label: 'Expirée' },
+  { value: 'ACTIVE', label: 'En ligne' },
+  { value: 'PENDING', label: 'Programmé' },
+  { value: 'SUSPENDED', label: 'Suspendu' },
+  { value: 'DRAFT', label: 'Brouillon' },
+];
+export type OffersNewsStatus =
+  | 'EXPIRED'
+  | 'ACTIVE'
+  | 'PENDING'
+  | 'SUSPENDED'
+  | 'DRAFT';
+interface ExtraData {
+  activeDays: number;
+  reservations?: number;
+  sales?: number;
+  status: OffersNewsStatus;
+}
+export interface Offer {
+  _id?: string;
+  title?: KustomTranslatedStrings;
+  shortDescription?: KustomTranslatedStrings;
+  description?: KustomTranslatedStrings;
+  medias?: KustomMedia[];
+  rubrics: Rubric[];
+  theme: Theme | string;
+  isButtonDisabled: boolean;
+  buttonLabel?: string;
+  buttonAction?: NewsAction;
+  buttonActionString: string;
+  isPriceDisabled: boolean;
+  isPriceFrom: boolean;
+  price: number;
+  priceDetails: string;
+  isDiscountEnabled: boolean;
+  discount: number;
+  isDiscountPercentage: boolean;
+  discountDisplay: DiscountDisplay;
+  isFlashSaleEnabled: boolean;
+  flashSaleTime: number;
+  flashSaleTimeUnit: FlashSaleTimeUnit;
+  flashSaleLocation: PublishLocation[];
+  metaTitle: string;
+  metaDescription: string;
+  prettyURL: string;
+  validityPeriodModel: ValidityPeriodModel;
+  validityPeriodFrom: Date | string;
+  validityPeriodTo: Date | string;
+  activePeriodModel: ActivePeriodModel;
+  activePeriodSetDatesModel: ActivePeriodSetDatesModel;
+  activePeriodFrom: Date | string;
+  activePeriodTo: Date | string;
+  activePeriodDays: ActivePeriodDay[];
+  establishmentsIds: string[];
+  location: PublishLocation[];
+  socialMedias: NewsSocialMedia[];
+  isModel: boolean;
+  isSuspended: boolean;
+  createdAt?: string;
+  extraData?: ExtraData;
+}
+
 export interface KustomPageComponent<T> {
   id: string;
   type: PageComponentType;
@@ -186,6 +319,10 @@ export interface RoomStuffComponentSlide {
   stuff: Stuff[];
 }
 
+export interface RoomStuffComponentData {
+  slides: RoomStuffComponentSlide[];
+}
+
 export interface TableComponentData {
   nColumns: number;
   nRow: number;
@@ -200,6 +337,10 @@ export interface TestimonyComponentSlide {
   publishDate?: string;
   description: KustomTranslatedStrings;
   medias: KustomResponsiveMedia;
+}
+
+export interface TestimonyComponentData {
+  slides: TestimonyComponentSlide[];
 }
 
 export interface TextCarouselComponentData {
@@ -241,6 +382,12 @@ export interface Accordion extends BaseAtomicComponent {
     text: KustomTranslatedStrings;
     hiddenText: KustomTranslatedStrings;
   }[];
+}
+
+export interface AccordionComponentSlide {
+  id: string;
+  text: KustomTranslatedStrings;
+  hiddenText: KustomTranslatedStrings;
 }
 
 export interface Code extends BaseAtomicComponent {

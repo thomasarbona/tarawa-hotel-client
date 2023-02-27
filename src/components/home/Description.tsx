@@ -1,5 +1,5 @@
 import AtomicButton from '@/lib/kustom-client-sdk/components/atomics/ActionButton';
-import AtomicText from '@/lib/kustom-client-sdk/components/atomics/Text';
+import AtomicText from '@/lib/kustom-client-sdk/components/RichText';
 import {
   ActionButton,
   CustomComponentData,
@@ -30,21 +30,20 @@ const Description = (props: DescriptionProps) => {
         flexDir={['column', 'column', 'column', 'row']}
         px={8}
         my={20}
-        boxSizing="content-box"
       >
         <Box flex={1}>
           <AtomicText
             fontFamily="fantasy"
             color="brand.500"
             fontSize={['32px', null, null, '48px']}
-            text={headline}
+            text={headline?.text}
           />
           <AtomicText
             mt={[6, null]}
             fontWeight="bold"
             fontSize={['40px', null, null, '72px']}
             lineHeight={1}
-            text={title}
+            text={title?.text}
           />
         </Box>
         <Box flex={1}>
@@ -55,7 +54,7 @@ const Description = (props: DescriptionProps) => {
             lineHeight="1.3"
             color="gray.800"
             fontWeight="500"
-            text={description}
+            text={description?.text}
           />
           <Box
             mt={[6, null, null, 6]}

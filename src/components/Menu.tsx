@@ -84,6 +84,14 @@ const Menu = () => {
     videoRef.current?.load();
   }, [currentMenuMedia]);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isOpen]);
+
   const open = (itemLabel?: string) => {
     setIsOpen(true);
     if (itemLabel) {
@@ -176,6 +184,7 @@ const Menu = () => {
                   pb={6}
                   cursor="pointer"
                   fontWeight="bold"
+                  fontSize="16px"
                   _groupHover={{
                     textDecoration: 'underline',
                     textUnderlineOffset: '6px',
@@ -198,6 +207,8 @@ const Menu = () => {
           left={[0, null, 120]}
           p={[5, null]}
           w={['100%', null, 'auto']}
+          maxH="100vh"
+          overflow="scroll"
         >
           {menu.map((item) => (
             <Box

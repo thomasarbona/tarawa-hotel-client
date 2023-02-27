@@ -1,55 +1,36 @@
 import '@/styles/globals.css';
+import 'react-modern-drawer/dist/index.css';
 
 import App from 'next/app';
-import Description from '@/components/home/Description';
 import Head from 'next/head';
-import OceanSection from '@/components/home/OceanSection';
-import Timeline from '@/components/home/Timeline';
 import chakraTheme from '@chakra-ui/theme';
 import getKustomClientInstance from '@/kustomClient';
 import theme from '@/theme';
 import type { AppProps as _AppProps } from 'next/app';
 import { ChakraBaseProvider } from '@chakra-ui/react';
-import { KustomRoutes } from '@/lib/kustom-client-sdk/types';
+import { KustomRoutes, Offer } from '@/lib/kustom-client-sdk/types';
 import { PagesContextProvider } from '@/contexts/pages';
 import { ParallaxProvider } from 'react-scroll-parallax';
-import { registerKustomComponent } from '@/lib/kustom-client-sdk/components/KustomComponent';
 import { useRef } from 'react';
 
-// import loaderAnimationData from '../lotties/loader.json';
+import loaderAnimationData from '../lotties/loader.json';
 
-const { Button } = chakraTheme.components;
-
-// const loaderLottieOptions = {
-//   loop: true,
-//   autoplay: true,
-//   animationData: loaderAnimationData,
-//   rendererSettings: {
-//     preserveAspectRatio: 'xMidYMid slice',
-//   },
-// };
-
-registerKustomComponent({
-  id: '16762984189504962',
-  Component: Timeline,
-});
-
-registerKustomComponent({
-  id: '16762982216122046',
-  Component: Description,
-});
-
-registerKustomComponent({
-  id: '16769093415252527',
-  Component: OceanSection,
-});
+export const loaderLottieOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: loaderAnimationData,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
 
 type AppProps = _AppProps & {
   routes: KustomRoutes;
+  offers: Offer[];
 };
 
 const _App = (props: AppProps) => {
-  const { Component, pageProps, routes } = props;
+  const { Component, pageProps, routes, offers } = props;
   // const { routes } = pageProps;
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -83,7 +64,7 @@ const _App = (props: AppProps) => {
       <div ref={wrapperRef}>
         <ChakraBaseProvider theme={theme}>
           <ParallaxProvider>
-            <PagesContextProvider routes={routes}>
+            <PagesContextProvider routes={routes} offers={offers}>
               <Component {...pageProps} />
             </PagesContextProvider>
           </ParallaxProvider>
@@ -97,10 +78,12 @@ _App.getInitialProps = async (context: any) => {
   const pageProps = await App.getInitialProps(context);
   const kustomClient = getKustomClientInstance();
   const routes = await kustomClient.getRoutes();
+  const offers = await kustomClient.fetchOffers();
 
   return {
     ...pageProps,
     routes,
+    offers,
   };
 };
 

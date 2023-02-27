@@ -100,11 +100,7 @@ const Timeline = (props: TimelineProps) => {
       justifyContent="center"
       overflow="hidden"
     >
-      <Container
-        maxW="container.xl"
-        w={[null, null, null, 'container.xl']}
-        centerContent
-      >
+      <Container maxW="container.xl" boxSizing="border-box" p={0} centerContent>
         {slides?.map((slide, index) => (
           <Box
             key={slide.id}

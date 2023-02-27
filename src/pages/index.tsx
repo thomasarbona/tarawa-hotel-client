@@ -1,12 +1,23 @@
+import Description from '@/components/home/Description';
+import FAQ from '@/components/home/FAQ';
+import Footer from '@/components/home/Footer';
 import Head from 'next/head';
 import Image from 'next/image';
 import ImageSmooth from '@/components/atomics/ImageSmooth';
-import KustomComponent from '@/lib/kustom-client-sdk/components/KustomComponent';
 import Lottie from 'react-lottie';
 import Menu from '@/components/Menu';
+import OceanSection from '@/components/home/OceanSection';
+import Offers from '@/components/home/Offers';
+import OffersPage from '@/components/offers/OffersPage';
 import PagesContext from '@/contexts/pages';
+import Reviews from '@/components/home/Reviews';
 import RoomsPages from '@/components/rooms/RoomsPages';
+import Slideshow from '@/components/home/Slideshow';
+import Timeline from '@/components/home/Timeline';
 import mainBackground from '@/../public/images/home/main.jpeg';
+import KustomComponent, {
+  registerKustomComponent,
+} from '@/lib/kustom-client-sdk/components/KustomComponent';
 import { Box } from '@chakra-ui/react';
 import { useContext } from 'react';
 
@@ -21,6 +32,41 @@ export const loaderLottieOptions = {
     preserveAspectRatio: 'xMidYMid slice',
   },
 };
+
+registerKustomComponent({
+  id: '16762984189504962',
+  Component: Timeline,
+});
+
+registerKustomComponent({
+  id: '16762982216122046',
+  Component: Description,
+});
+
+registerKustomComponent({
+  id: '16769093415252527',
+  Component: OceanSection,
+});
+
+registerKustomComponent({
+  id: '16771692810902084',
+  Component: Slideshow,
+});
+
+registerKustomComponent({
+  id: '16771781401437166',
+  Component: Offers,
+});
+
+registerKustomComponent({
+  id: '16771811930783352',
+  Component: Reviews,
+});
+
+registerKustomComponent({
+  id: '16775089026965984',
+  Component: FAQ,
+});
 
 export default function Home(props: any) {
   const pagesContext = useContext(PagesContext);
@@ -53,9 +99,11 @@ export default function Home(props: any) {
         {content?.components?.map((component) => (
           <KustomComponent key={component.id} component={component} />
         ))}
+        <Footer />
       </Box>
       <Menu />
       <RoomsPages />
+      <OffersPage />
     </>
   );
 }

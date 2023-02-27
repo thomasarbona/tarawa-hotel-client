@@ -1,71 +1,84 @@
-import React, { useState } from 'react';
+import Drawer from 'react-modern-drawer';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Button,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
   Heading,
+  useBreakpoint,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
+import ConditionalWrapper from '../ConditionalWrapper';
+import RoomPage from './RoomPage';
 import Rooms from './Rooms';
 
 interface RoomsPagesProps {}
+
+const roomRegex = /chambre-(.*)/;
 
 const RoomsPages: React.FC<RoomsPagesProps> = (props) => {
   const {} = props;
   const router = useRouter();
 
-  const close = () => {
-    router.push(router.asPath.split('#')[0]);
-  };
-
   const route = router.asPath.split('#')[1];
 
-  const isRoomOpen = route === 'chambre';
-  const isRoomsOpen = isRoomOpen || route === 'chambres';
+  const match = useMemo(() => route?.match(roomRegex), [route]);
+  const isRoomOpen = !!match?.length;
+  const isRoomsOpen = !!route?.startsWith('chambre');
 
-  console.log(router.asPath);
+  const breakpoint = useBreakpoint();
+  const [isRoomsVisible, roomsSize] = useBreakpointValue({
+    base: [false, 300],
+    lg: [isRoomsOpen, 300],
+    xl: [isRoomsOpen, 496],
+  }) as [boolean, number];
+
+  const close = () => {
+    if (isRoomOpen && !isRoomsVisible) {
+      router.push(router.asPath.split('#')[0] + '#chambres');
+    } else {
+      router.push(router.asPath.split('#')[0]);
+    }
+  };
+
+  useEffect(() => {
+    if (isRoomOpen || isRoomsOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isRoomOpen, isRoomsOpen]);
 
   return (
     <>
-      <Drawer isOpen={isRoomOpen} placement="right" onClose={close} size="xl">
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
+      <RoomPage
+        isOpen={isRoomOpen}
+        onClose={close}
+        roomSlug={match?.[1]}
+        parentDrawerWidth={roomsSize}
+      />
 
-          <DrawerBody display="flex">
-            <Box h="100vh" bgColor="yelllow">
-              ROOM
-            </Box>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-      <Drawer isOpen={isRoomsOpen} placement="right" onClose={close} size="sm">
-        <DrawerOverlay />
-        <DrawerContent bgColor="gray.100">
-          <DrawerCloseButton
-            zIndex={99}
-            bgColor="white"
-            p={3}
-            borderRadius="full"
-            fontSize="12px"
-            color="gray.800"
-          />
-
-          <DrawerBody display="flex" flexDir="column">
-            <Heading pt={10} fontWeight="bold" fontSize="28px" mb={2} ml={2}>
-              Nos chambres et suites
-            </Heading>
-            <Rooms />
-          </DrawerBody>
-        </DrawerContent>
+      <Drawer
+        open={isRoomOpen ? isRoomsVisible : isRoomsOpen}
+        onClose={close}
+        direction="right"
+        size={breakpoint === 'base' ? '100%' : roomsSize + 'px'}
+        style={{ maxWidth: '100vw' }}
+        enableOverlay={!isRoomOpen}
+      >
+        <Box
+          px={6}
+          maxH="100%"
+          overflowY="scroll"
+          bgColor="gray.100"
+          minHeight="100vh"
+        >
+          <Heading pt={10} fontWeight="bold" fontSize="28px" mb={2} ml={2}>
+            Nos chambres et suites
+          </Heading>
+          <Rooms />
+        </Box>
       </Drawer>
     </>
   );

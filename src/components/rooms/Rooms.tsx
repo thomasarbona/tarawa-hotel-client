@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import PagesContext from '@/contexts/pages';
+import TranslatedString from '@/lib/kustom-client-sdk/components/TranslatedString';
 import React, { useContext } from 'react';
 import { Box, Heading, Text, useTheme } from '@chakra-ui/react';
 import {
+  KustomPage,
   KustomPageComponent,
   MediasComponentData,
   RoomSpecsComponentData,
 } from '@/lib/kustom-client-sdk/types';
+import { useRouter } from 'next/router';
 
 interface RoomsProps {}
 
@@ -15,13 +18,17 @@ const Rooms: React.FC<RoomsProps> = (props) => {
 
   const theme = useTheme();
 
+  const router = useRouter();
+
   const pages = useContext(PagesContext);
 
   const rooms = Object.values(pages.routes).filter(
     (page) => page.model === 'room',
   );
 
-  console.log(theme);
+  const goToRoom = (room: KustomPage) => {
+    router.replace(`/#chambre-${room.prettyUrl}`);
+  };
 
   return (
     <Box w="100%">
@@ -35,12 +42,10 @@ const Rooms: React.FC<RoomsProps> = (props) => {
 
         const defaultMedia = mediaCmp.data.medias[0].default;
 
-        console.log('media', defaultMedia);
-
         return (
           <Box
             key={room._id}
-            h="400px"
+            h={['300px', null, null, null, '400px']}
             position="relative"
             borderRadius="2xl"
             overflow="hidden"
@@ -53,6 +58,7 @@ const Rooms: React.FC<RoomsProps> = (props) => {
               outlineColor: 'brand.500',
             }}
             mb={5}
+            onClick={() => goToRoom(room)}
           >
             {defaultMedia?.url && (
               <Image
@@ -73,9 +79,9 @@ const Rooms: React.FC<RoomsProps> = (props) => {
               p={3}
               pt={20}
             >
-              <Heading fontWeight="bold" fontSize="24px">
-                {specs.title.fr}
-              </Heading>
+              <TranslatedString isHeading fontWeight="bold" fontSize="24px">
+                {specs.title}
+              </TranslatedString>
               <Text color="white" fontSize="16px">
                 {specs.area} · {specs.peoplesNumber} personnes · {specs.bed}
               </Text>

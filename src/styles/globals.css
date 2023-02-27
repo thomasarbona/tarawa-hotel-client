@@ -131,3 +131,11 @@ img {
     filter: blur(0);
   }
 }
+
+.chakra-modal__content-container {
+  width: auto !important;
+}
+
+.EZDrawer .EZDrawer__container {
+  box-shadow: 0 0 100px 30px rgb(0 0 0 / 10%) !important;
+}

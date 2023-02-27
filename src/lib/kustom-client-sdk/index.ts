@@ -1,7 +1,7 @@
 import { paramsForServer } from 'feathers-hooks-common';
 
 import getFeathersClientApp from './feathersClient';
-import { KustomPage, KustomRoutes } from './types';
+import { KustomPage, KustomRoutes, Offer } from './types';
 
 interface KustomClientConfig {
   establishmentId: string;
@@ -21,6 +21,20 @@ const getKustomClient = (config: KustomClientConfig) => {
         const data = await app.service('pages').find(
           paramsForServer({
             query: { establishmentId },
+            stage: 'production',
+          }),
+        );
+        return data;
+      } catch (error) {
+        console.error(error);
+        return [];
+      }
+    },
+    fetchOffers: async (): Promise<Offer[]> => {
+      try {
+        const data = await app.service('offers').find(
+          paramsForServer({
+            query: { establishmentsIds: establishmentId },
             stage: 'production',
           }),
         );

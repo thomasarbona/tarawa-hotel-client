@@ -17,7 +17,7 @@ const GrowingText: React.FC<GrowingTextProps> = (props) => {
 
   const fontSize =
     (deviceName === 'mobile' ? 50 : 100) + 5000 * easeInOutSine(percentage);
-  const opacity = 1.6 - percentage * 5;
+  const opacity = 1.6 - percentage * (deviceName === 'mobile' ? 4.3 : 5);
 
   return (
     <Box fontWeight="bold" opacity={opacity}>
@@ -30,8 +30,6 @@ const GrowingText: React.FC<GrowingTextProps> = (props) => {
               id="text"
               x="50%"
               y="50%"
-              dy="5px"
-              dx="5px"
               fontSize={fontSize + 'px'}
             >
               <tspan x="50%">UN PARADIS</tspan>

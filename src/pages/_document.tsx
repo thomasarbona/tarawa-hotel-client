@@ -16,6 +16,10 @@ export default function Document() {
           href="https://fonts.cdnfonts.com/css/tiger-walk"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.cdnfonts.com/css/sf-ui-display"
+          rel="stylesheet"
+        />
       </Head>
       <body>
         <Main />
