@@ -22,6 +22,7 @@ import {
   RoomStuffComponentData,
   TextComponentData,
 } from '@/lib/kustom-client-sdk/types';
+import { useRouter } from 'next/router';
 
 import ExpandableText from '../atomics/ExpandableText';
 import MediasCarousel from './MediasCarousel';
@@ -41,6 +42,7 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
   const width = 1320;
 
   const pages = useContext(PagesContext);
+  const router = useRouter();
 
   const [currentMediaViewer, setCurrentMediaViewer] = useState<
     KustomResponsiveMedia | undefined
@@ -81,6 +83,10 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
 
   console.log(breakpoint);
 
+  const close = () => {
+    router.replace('/#chambres', undefined, { scroll: false });
+  };
+
   return (
     <Drawer
       open={isOpen}
@@ -98,6 +104,7 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
       >
         <Box p={[0, null, 8]} position="relative">
           <IconButton
+            display={['block', null, null, 'none']}
             position="absolute"
             top="10px"
             right="10px"
@@ -105,7 +112,7 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
             aria-label="Close"
             icon={<CloseIcon />}
             isRound
-            onClick={onClose}
+            onClick={close}
             boxShadow="md"
           />
           {breakpoint === 'base' ? (

@@ -1,19 +1,14 @@
 import Drawer from 'react-modern-drawer';
 import PagesContext from '@/lib/kustom-client-sdk/contexts/pages';
-import React, {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import {
   Box,
-  Button,
   Heading,
+  IconButton,
   useBreakpoint,
   useBreakpointValue,
 } from '@chakra-ui/react';
+import { CloseIcon } from '@chakra-ui/icons';
 import { useRouter } from 'next/router';
 
 import ConditionalWrapper from '../ConditionalWrapper';
@@ -51,8 +46,9 @@ const RoomsPages: React.FC<RoomsPagesProps> = (props) => {
     router.replace(router.asPath.split('#')[0], undefined, { scroll: false });
   };
 
-  useLayoutEffect(() => {
-    if (router.asPath.split('#')[1] === 'chambres') {
+  useEffect(() => {
+    if (router.asPath.split('#')[1] === 'chambres' && breakpoint !== 'base') {
+      console.log('chiotte');
       setTimeout(() => {
         router
           .replace('/#chambre-' + rooms[0].prettyUrl, undefined, {
@@ -66,7 +62,7 @@ const RoomsPages: React.FC<RoomsPagesProps> = (props) => {
           });
       }, 0);
     }
-  }, [rooms, router, router.asPath]);
+  }, [rooms, router, router.asPath, breakpoint]);
 
   useEffect(() => {
     if (isRoomOpen || isRoomsOpen) {
@@ -100,6 +96,17 @@ const RoomsPages: React.FC<RoomsPagesProps> = (props) => {
           bgColor="gray.100"
           minHeight="100vh"
         >
+          <IconButton
+            position="absolute"
+            top="10px"
+            right="10px"
+            zIndex="100"
+            aria-label="Close"
+            icon={<CloseIcon />}
+            isRound
+            onClick={close}
+            boxShadow="md"
+          />
           <Heading pt={10} fontWeight="bold" fontSize="28px" mb={2} ml={2}>
             Nos chambres et suites
           </Heading>
