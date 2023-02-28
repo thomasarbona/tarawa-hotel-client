@@ -187,7 +187,7 @@ const Timeline = (props: TimelineProps) => {
                 <Box
                   w={mediasSizes?.[index]?.w}
                   h={mediasSizes?.[index]?.h}
-                  borderRadius="xl"
+                  borderRadius={[null, null, 'xl']}
                   overflow="hidden"
                   position={['relative', null, null, 'absolute']}
                   right={['auto', 'auto', 'auto', index % 2 ? 0 : 'auto']}

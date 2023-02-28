@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Heading, Text, TextProps } from '@chakra-ui/react';
 
+import LanguageContext from '../contexts/language';
 import { KustomTranslatedStrings } from '../types';
 
 interface TranslatedStringProps extends Omit<TextProps, 'children'> {
@@ -14,11 +15,15 @@ const TranslatedString: React.FC<TranslatedStringProps> = (props) => {
 
   const TextComponent = isHeading ? Heading : Text;
 
+  const language = useContext(LanguageContext);
+
   if (!text && !children) return null;
 
-  return (
-    <TextComponent {...textProps}>{text?.fr || children?.fr}</TextComponent>
-  );
+  const renderText = (text || children) as KustomTranslatedStrings;
+
+  const renderString = renderText[language.currentLang] || renderText.fr;
+
+  return <TextComponent {...textProps}>{renderString}</TextComponent>;
 };
 
 export default TranslatedString;

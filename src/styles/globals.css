@@ -139,3 +139,13 @@ img {
 .EZDrawer .EZDrawer__container {
   box-shadow: 0 0 100px 30px rgb(0 0 0 / 10%) !important;
 }
+
+.hideScrollbar {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+}
+
+.hideScrollbar::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}

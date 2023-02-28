@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import PagesContext from '@/contexts/pages';
+import PagesContext from '@/lib/kustom-client-sdk/contexts/pages';
 import TranslatedString from '@/lib/kustom-client-sdk/components/TranslatedString';
 import React, { useContext } from 'react';
 import { Box, Heading, Text, useTheme } from '@chakra-ui/react';
@@ -11,10 +11,12 @@ import {
 } from '@/lib/kustom-client-sdk/types';
 import { useRouter } from 'next/router';
 
-interface RoomsProps {}
+interface RoomsProps {
+  roomSlug?: string;
+}
 
 const Rooms: React.FC<RoomsProps> = (props) => {
-  const {} = props;
+  const { roomSlug } = props;
 
   const theme = useTheme();
 
@@ -54,9 +56,12 @@ const Rooms: React.FC<RoomsProps> = (props) => {
             cursor="pointer"
             _hover={{
               outline: '6px solid',
-
               outlineColor: 'brand.500',
             }}
+            {...(room.prettyUrl === roomSlug && {
+              outline: '6px solid',
+              outlineColor: 'brand.500',
+            })}
             mb={5}
             onClick={() => goToRoom(room)}
           >

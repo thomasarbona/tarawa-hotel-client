@@ -8,8 +8,14 @@ import ResponsiveMedias from '@/lib/kustom-client-sdk/components/ResponsiveMedia
 import RichText from '@/lib/kustom-client-sdk/components/RichText';
 import randomIntFromInterval from '@/helpers/randomIntFromInterval';
 import useResponsiveMediasDevice from '@/lib/kustom-client-sdk/hooks/useResponsiveMediasDevice';
-import React, { useMemo, useState } from 'react';
-import { Box, Container, SimpleGrid, Text } from '@chakra-ui/react';
+import React, { useMemo, useRef, useState } from 'react';
+import {
+  Box,
+  Container,
+  SimpleGrid,
+  Text,
+  useBreakpointValue,
+} from '@chakra-ui/react';
 import {
   KustomPageComponent,
   TestimonyComponentData,
@@ -19,13 +25,12 @@ interface ReviewsProps {
   component: KustomPageComponent<TestimonyComponentData>;
 }
 
-const POST_WIDTH = 389;
-const POST_HEIGHT = 480;
-
 const Reviews: React.FC<ReviewsProps> = (props) => {
   const { component } = props;
 
   const slides = component?.data?.slides;
+
+  const mediaContainerRef = useRef<HTMLDivElement>(null);
 
   const currentDevice = useResponsiveMediasDevice();
 
@@ -45,8 +50,16 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
     [slides],
   );
 
-  const postMarginRight = 40;
-  const postDist = 389 + postMarginRight;
+  const [postWidth, postHeight, postMarginRight] = useBreakpointValue({
+    base: [mediaContainerRef.current?.clientWidth || 260, 480, -20],
+    sm: [389, 480, -20],
+    md: [389, 480, -20],
+    lg: [389, 480, 20],
+  }) as number[];
+
+  console.log(postMarginRight);
+
+  const postDist = postWidth + postMarginRight;
 
   const next = () => {
     if (currentPostIndex === posts?.length - 1) {
@@ -67,16 +80,25 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
   return (
     <Box
       bgColor="gray.100"
-      py={60}
+      py={[28, null, null, 60]}
+      pb={[40, null, null, 60]}
       onClick={() => next()}
       display="flex"
       overflowX="hidden"
       px={10}
     >
       <Container maxW="container.xl" position="relative" px={3.5}>
-        <Box position="absolute" top="-20" left="0" display="flex" h="672px">
+        <Box
+          position="absolute"
+          top="-20"
+          left="0"
+          right={0}
+          display="flex"
+          h="672px"
+        >
           {/* SMARTPHONE DISPLAY */}
           <Box
+            display={['none', null, null, 'block']}
             bgColor="white"
             w="414px"
             px={3.5}
@@ -96,8 +118,8 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
               </Text>
             </Box>
             <Box
-              w={POST_WIDTH + 'px'}
-              h={POST_HEIGHT + 'px'}
+              w={postWidth + 'px'}
+              h={postHeight + 'px'}
               borderRadius="lg"
               bgColor="gray.100"
             ></Box>
@@ -162,31 +184,37 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
               </Box>
             </Box>
           </Box>
-          <Box overflow="hidden" position="relative">
+          <Box overflow="hidden" position="relative" zIndex={1} w="100%">
             <Box
               top={`calc(-100% * ${currentPostIndex})`}
               position="relative"
               transition="top 0.4s ease"
             >
               {slides?.map((slide) => (
-                <Box pl={[20, null, null, null, 40]} key={slide.id} h="672px">
-                  <Box>
-                    <Box h="20"></Box>
+                <Box
+                  pl={[0, null, null, 40]}
+                  key={slide.id}
+                  h="672px"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Box w="100%">
+                    <Box h="20" display={['none', null, null, 'block']}></Box>
                     <Box
-                      h={POST_HEIGHT + 'px'}
+                      h={[null, null, null, postHeight + 'px']}
                       display="flex"
                       alignItems="center"
-                      maxW="50vw"
+                      maxW={[null, null, null, '50vw']}
                     >
                       <RichText
                         fontWeight="bold"
                         color="black"
-                        fontSize={[null, null, null, '42px', '62px']}
+                        fontSize={['42px', null, null, null, '62px']}
                         text={slide?.description}
                       />
                     </Box>
                     <Box
-                      fontSize={['28px', null, null, null, '36px']}
+                      fontSize={['28px', null, null, '36px']}
                       color="black"
                       display="flex"
                       mt={6}
@@ -202,7 +230,7 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
             </Box>
           </Box>
         </Box>
-        <Box flexShrink={0}>
+        <Box flexShrink={0} ref={mediaContainerRef}>
           <Box
             pr={20}
             display="flex"
@@ -214,15 +242,26 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
             {posts?.map((post, index) => (
               <Box
                 key={post.id}
-                w={POST_WIDTH + 'px'}
-                h={POST_HEIGHT + 'px'}
+                w={postWidth + 'px'}
+                h={postHeight + 'px'}
                 flexShrink={0}
                 position="relative"
                 overflow={'hidden'}
-                mr={postMarginRight + 'px'}
-                transition="opacity 0.4s ease"
-                opacity={index === currentPostIndex ? 1 : 0.15}
+                mr={[postMarginRight + 'px']}
+                transition="all 0.4s ease"
+                opacity={[
+                  0.15,
+                  null,
+                  null,
+                  index === currentPostIndex ? 1 : 0.15,
+                ]}
                 borderRadius="lg"
+                transform={[
+                  `scale(${index === currentPostIndex ? 1 : 0.7})`,
+                  null,
+                  null,
+                  'scale(1)',
+                ]}
               >
                 <ResponsiveMedias
                   currentDevice={currentDevice}
@@ -230,6 +269,9 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
                   style={{
                     objectFit: 'cover',
                   }}
+                  fill
+                  width={undefined}
+                  height={undefined}
                 />
               </Box>
             ))}

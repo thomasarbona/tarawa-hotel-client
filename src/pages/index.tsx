@@ -9,7 +9,7 @@ import Menu from '@/components/Menu';
 import OceanSection from '@/components/home/OceanSection';
 import Offers from '@/components/home/Offers';
 import OffersPage from '@/components/offers/OffersPage';
-import PagesContext from '@/contexts/pages';
+import PagesContext from '@/lib/kustom-client-sdk/contexts/pages';
 import Reviews from '@/components/home/Reviews';
 import RoomsPages from '@/components/rooms/RoomsPages';
 import Slideshow from '@/components/home/Slideshow';

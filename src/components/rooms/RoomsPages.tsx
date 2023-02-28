@@ -1,5 +1,12 @@
 import Drawer from 'react-modern-drawer';
-import React, { useEffect, useMemo, useState } from 'react';
+import PagesContext from '@/lib/kustom-client-sdk/contexts/pages';
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
   Box,
   Button,
@@ -27,6 +34,12 @@ const RoomsPages: React.FC<RoomsPagesProps> = (props) => {
   const isRoomOpen = !!match?.length;
   const isRoomsOpen = !!route?.startsWith('chambre');
 
+  const pages = useContext(PagesContext);
+
+  const rooms = Object.values(pages.routes).filter(
+    (page) => page.model === 'room',
+  );
+
   const breakpoint = useBreakpoint();
   const [isRoomsVisible, roomsSize] = useBreakpointValue({
     base: [false, 300],
@@ -35,12 +48,25 @@ const RoomsPages: React.FC<RoomsPagesProps> = (props) => {
   }) as [boolean, number];
 
   const close = () => {
-    if (isRoomOpen && !isRoomsVisible) {
-      router.push(router.asPath.split('#')[0] + '#chambres');
-    } else {
-      router.push(router.asPath.split('#')[0]);
-    }
+    router.replace(router.asPath.split('#')[0], undefined, { scroll: false });
   };
+
+  useLayoutEffect(() => {
+    if (router.asPath.split('#')[1] === 'chambres') {
+      setTimeout(() => {
+        router
+          .replace('/#chambre-' + rooms[0].prettyUrl, undefined, {
+            shallow: true,
+          })
+          .catch((e) => {
+            // workaround for https://github.com/vercel/next.js/issues/37362
+            if (!e.cancelled) {
+              throw e;
+            }
+          });
+      }, 0);
+    }
+  }, [rooms, router, router.asPath]);
 
   useEffect(() => {
     if (isRoomOpen || isRoomsOpen) {
@@ -77,7 +103,7 @@ const RoomsPages: React.FC<RoomsPagesProps> = (props) => {
           <Heading pt={10} fontWeight="bold" fontSize="28px" mb={2} ml={2}>
             Nos chambres et suites
           </Heading>
-          <Rooms />
+          <Rooms roomSlug={match?.[1]} />
         </Box>
       </Drawer>
     </>

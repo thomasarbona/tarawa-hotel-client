@@ -29,9 +29,9 @@ const Offers: React.FC<OffersProps> = (props) => {
       bgImage={`url(${media?.url})`}
       bgSize="cover"
       bgPosition={['bottom', null, 'right']}
-      py={48}
+      py={[28, null, null, 48]}
       px={[10, null, 20, 40]}
-      pb={[60, '500px', 48]}
+      pb={['350px', '500px', 48]}
       display="flex"
       flexDir="column"
       alignItems={['center', null, 'flex-start']}

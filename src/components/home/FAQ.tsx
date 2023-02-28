@@ -13,6 +13,7 @@ import {
   Box,
   Button,
   Container,
+  Heading,
   Text,
 } from '@chakra-ui/react';
 import {
@@ -42,6 +43,17 @@ const FAQ: React.FC<FAQProps> = (props) => {
         display="flex"
         flexDir={['column', null, null, null, 'row']}
       >
+        <Heading
+          textAlign={'center'}
+          maxW={[null, null, null, '60vw', '40vw']}
+          fontSize={['40px', null, '60px', '72px']}
+          color="black"
+          lineHeight={1}
+          fontWeight="bold"
+          mb={20}
+        >
+          Informations pratiques
+        </Heading>
         <Box flex={3} px={[5, null, null, null, 0]}>
           <Accordion allowToggle>
             {slides.map((slide, index) => (
@@ -51,7 +63,7 @@ const FAQ: React.FC<FAQProps> = (props) => {
                 borderBottom={index === slides.length - 1 ? 'none' : undefined}
               >
                 <h2>
-                  <AccordionButton mb={4}>
+                  <AccordionButton pb={4}>
                     <Box as="span" flex="1" textAlign="left">
                       <TranslatedString
                         fontSize="24px"
@@ -80,6 +92,7 @@ const FAQ: React.FC<FAQProps> = (props) => {
               px={5}
               py={6}
               mt={4}
+              ml={2}
               onClick={() => setSeeMore((s) => !s)}
             >
               {!seeMore ? 'Plus de questions' : 'Moins de questions'}
@@ -88,9 +101,10 @@ const FAQ: React.FC<FAQProps> = (props) => {
         </Box>
         <Box
           flex={2}
-          pl={[5, null, null, null, 40]}
-          py={[5, null, null, null, 0]}
+          pl={[10, null, null, null, 40]}
+          pr={[10, null, null, null, 0]}
           mt={[16, null, null, null, 0]}
+          maxW={[null, null, '60vw', '40vw']}
         >
           {[
             {

@@ -1,5 +1,5 @@
 import Drawer from 'react-modern-drawer';
-import PagesContext from '@/contexts/pages';
+import PagesContext from '@/lib/kustom-client-sdk/contexts/pages';
 import ResponsiveMedias from '@/lib/kustom-client-sdk/components/ResponsiveMedias';
 import RichText from '@/lib/kustom-client-sdk/components/RichText';
 import TranslatedString from '@/lib/kustom-client-sdk/components/TranslatedString';

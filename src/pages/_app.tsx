@@ -9,7 +9,8 @@ import theme from '@/theme';
 import type { AppProps as _AppProps } from 'next/app';
 import { ChakraBaseProvider } from '@chakra-ui/react';
 import { KustomRoutes, Offer } from '@/lib/kustom-client-sdk/types';
-import { PagesContextProvider } from '@/contexts/pages';
+import { LanguageContextProvider } from '@/lib/kustom-client-sdk/contexts/language';
+import { PagesContextProvider } from '@/lib/kustom-client-sdk/contexts/pages';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import { useRef } from 'react';
 
@@ -65,7 +66,9 @@ const _App = (props: AppProps) => {
         <ChakraBaseProvider theme={theme}>
           <ParallaxProvider>
             <PagesContextProvider routes={routes} offers={offers}>
-              <Component {...pageProps} />
+              <LanguageContextProvider>
+                <Component {...pageProps} />
+              </LanguageContextProvider>
             </PagesContextProvider>
           </ParallaxProvider>
         </ChakraBaseProvider>

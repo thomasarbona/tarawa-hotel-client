@@ -1,7 +1,7 @@
 import Drawer from 'react-modern-drawer';
 import Image from 'next/image';
 import Link from 'next/link';
-import PagesContext from '@/contexts/pages';
+import PagesContext from '@/lib/kustom-client-sdk/contexts/pages';
 import TranslatedString from '@/lib/kustom-client-sdk/components/TranslatedString';
 import React, { useContext, useEffect } from 'react';
 import {
