@@ -69,7 +69,6 @@ const Footer: React.FC<FooterProps> = (props) => {
             fontSize="18px"
             w={['100%', null, null, null, 'unset']}
             display="flex"
-            flex={1}
             alignItems="center"
             justifyContent="space-between"
           >
@@ -99,7 +98,7 @@ const Footer: React.FC<FooterProps> = (props) => {
                 ))}
               </MenuList>
             </Menu>
-            <Text>© 2023 Tarawa Hotel</Text>
+            <Text ml={4}>© 2023 Tarawa Hotel</Text>
           </Box>
           <Box fontSize="16px" mt={[10, null, null, null, 0]}>
             <Stack

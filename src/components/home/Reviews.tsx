@@ -8,7 +8,13 @@ import ResponsiveMedias from '@/lib/kustom-client-sdk/components/ResponsiveMedia
 import RichText from '@/lib/kustom-client-sdk/components/RichText';
 import randomIntFromInterval from '@/helpers/randomIntFromInterval';
 import useResponsiveMediasDevice from '@/lib/kustom-client-sdk/hooks/useResponsiveMediasDevice';
-import React, { useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   Box,
   Container,
@@ -31,6 +37,7 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
   const slides = component?.data?.slides;
 
   const mediaContainerRef = useRef<HTMLDivElement>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const currentDevice = useResponsiveMediasDevice();
 
@@ -57,16 +64,28 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
     lg: [389, 480, 20],
   }) as number[];
 
-  console.log(postMarginRight);
-
-  const postDist = postWidth + postMarginRight;
-
-  const next = () => {
+  const next = useCallback(() => {
     if (currentPostIndex === posts?.length - 1) {
       setCurrentPostIndex(0);
     } else {
       setCurrentPostIndex(currentPostIndex + 1);
     }
+  }, [currentPostIndex, posts?.length]);
+
+  useEffect(() => {
+    if (!hasInteracted) {
+      const interval = setInterval(() => {
+        next();
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [hasInteracted, next]);
+
+  const postDist = postWidth + postMarginRight;
+
+  const userNext = () => {
+    setHasInteracted(true);
+    next();
   };
 
   const prev = () => {
@@ -82,7 +101,7 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
       bgColor="gray.100"
       py={[28, null, null, 60]}
       pb={[40, null, null, 60]}
-      onClick={() => next()}
+      onClick={() => userNext()}
       display="flex"
       overflowX="hidden"
       px={10}
@@ -135,41 +154,7 @@ const Reviews: React.FC<ReviewsProps> = (props) => {
                   <IconIgComments />
                   <IconIgSend />
                 </SimpleGrid>
-                {posts[currentPostIndex]?.isSlider && (
-                  <SimpleGrid
-                    position="absolute"
-                    columns={4}
-                    spacing={1.5}
-                    left="50%"
-                    top="50%"
-                    transform={'translate(-50%, 50%)'}
-                  >
-                    <Box
-                      w="8px"
-                      h="8px"
-                      bgColor="cyan.500"
-                      borderRadius="full"
-                    ></Box>
-                    <Box
-                      w="8px"
-                      h="8px"
-                      bgColor="gray.200"
-                      borderRadius="full"
-                    ></Box>
-                    <Box
-                      w="8px"
-                      h="8px"
-                      bgColor="gray.200"
-                      borderRadius="full"
-                    ></Box>
-                    <Box
-                      w="8px"
-                      h="8px"
-                      bgColor="gray.200"
-                      borderRadius="full"
-                    ></Box>
-                  </SimpleGrid>
-                )}
+
                 <IconIgSave />
               </Box>
               <Box py={3}>
