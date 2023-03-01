@@ -30,31 +30,31 @@ const Slideshow: React.FC<SlideshowProps> = (props) => {
   return (
     <Box
       bg="transparent linear-gradient(180deg, #D2D1CA 0%, #BBB9AF 100%) 0% 0% no-repeat padding-box"
-      pb={['800px', null, null, '900px']}
+      pb={[20, '900px']}
     >
       <Box>
         <RichText
           color="white"
           fontWeight="bold"
           fontSize={['42px', null, '90px', null, '136px']}
-          px={[10, null, null, '20vw']}
-          py={[40, null, null, 60]}
+          px={[10, null, '20vw']}
+          py={[20]}
           lineHeight={1.2}
           textAlign="center"
           text={title}
         />
       </Box>
       <Box
-        position="absolute"
+        position={['unset', 'absolute']}
         className="hideScrollbar"
         display="flex"
         flexDir="column"
-        width={'800px'}
-        height={'100vw'}
+        width={['100vw', '900px']}
+        height={['unset', '100vw']}
         // flexWrap="nowrap"
         overflowY="auto"
         overflowX="hidden"
-        transform="rotate(-90deg) translateY(-800px)"
+        transform={['unset', 'rotate(-90deg) translateY(-900px)']}
         transformOrigin="right top"
       >
         {slides?.map((slide, index) => {
@@ -67,52 +67,51 @@ const Slideshow: React.FC<SlideshowProps> = (props) => {
             <Box
               key={slide.id}
               display="flex"
+              maxW={['100vw', 'unset']}
+              flexDir={['column', 'row']}
               mx={[10, null, 20, 40]}
-              transform="rotate(90deg)"
+              transform={['unset', 'rotate(90deg)']}
               transformOrigin="left top"
               position={'relative'}
-              right={'-100%'}
-              pt={[0, null, null, 40]}
+              right={['unset', '-100%']}
+              pt={[0, 40]}
               my={20}
-              mb={[
-                index % 2 ? '800px' : 60,
-                null,
-                null,
-                index % 2 ? '1000px' : 80,
-              ]}
+              mt={[!index ? 0 : 20, 20]}
+              mb={[0, index % 2 ? '1000px' : 80]}
             >
               <Box
-                order={index === slides.length - 1 ? 2 : undefined}
-                w={['228px', null, '330px', '420px']}
+                order={['unset', index === slides.length - 1 ? 2 : null]}
+                w={['100%', '420px']}
                 position="relative"
-                ml={index === slides.length - 1 ? [5, null, 10, 20] : 0}
+                ml={index === slides.length - 1 ? [0, 20] : 0}
                 flexShrink={0}
               >
                 <ResponsiveMedias
                   medias={media1}
                   currentDevice={currentDevice}
                   style={{
-                    objectFit: 'contain',
+                    objectFit: 'cover',
                     borderRadius: theme.radii.md,
                   }}
                 />
               </Box>
               <Box
-                pl={index === slides.length - 1 ? 0 : [10, null, 16, 20]}
-                pt={index % 2 ? 40 : 20}
-                pr={index === slides.length - 1 ? [2, null, 5, 10] : 0}
-                display={index % 2 ? 'flex' : undefined}
+                pl={index === slides.length - 1 ? 0 : [0, 20]}
+                pt={[10, index % 2 ? 40 : 20]}
+                pr={index === slides.length - 1 ? [0, 10] : 0}
+                display={['unset', index % 2 ? 'flex' : null]}
+                textAlign={['center', 'left']}
               >
                 <Box
-                  minW={'400px'}
-                  maxW={['100vw', null, 'none']}
-                  pr={10}
-                  mr={[2, null, null, 10]}
+                  minW={['unset', '400px']}
+                  maxW={['100%', 'none']}
+                  pr={[5, 10]}
+                  mr={[0, 10]}
                 >
                   <RichText
                     fontFamily="heading"
                     fontWeight="bold"
-                    fontSize={['24px', null, null, '40px']}
+                    fontSize={['24px', '40px']}
                     color="white"
                     mb={1}
                     text={title}
@@ -124,13 +123,9 @@ const Slideshow: React.FC<SlideshowProps> = (props) => {
                   />
                 </Box>
                 <Box
-                  mt={[index % 2 ? 2 : 10, null, null, index % 2 ? 5 : 20]}
-                  w={[
-                    index % 2 ? '400px' : '350px',
-                    null,
-                    index % 2 ? '500px' : '400px',
-                    index % 2 ? '700px' : '500px',
-                  ]}
+                  mt={[5, index % 2 ? 5 : 20]}
+                  w={['100%', index % 2 ? '700px' : '500px']}
+                  h={['200px', 'unset']}
                   position="relative"
                   flexShrink={0}
                 >
@@ -138,9 +133,13 @@ const Slideshow: React.FC<SlideshowProps> = (props) => {
                     medias={media2?.media}
                     currentDevice={currentDevice}
                     style={{
-                      objectFit: 'contain',
+                      objectFit:
+                        currentDevice === 'mobile' ? 'cover' : 'contain',
                       borderRadius: theme.radii.md,
                     }}
+                    fill
+                    width={undefined}
+                    height={undefined}
                   />
                 </Box>
               </Box>
