@@ -48,7 +48,6 @@ const RoomsPages: React.FC<RoomsPagesProps> = (props) => {
 
   useEffect(() => {
     if (router.asPath.split('#')[1] === 'chambres' && breakpoint !== 'base') {
-      console.log('chiotte');
       setTimeout(() => {
         router
           .replace('/#chambre-' + rooms[0].prettyUrl, undefined, {

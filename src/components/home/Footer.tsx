@@ -37,6 +37,7 @@ const Footer: React.FC<FooterProps> = (props) => {
 
   return (
     <Box
+      className="footer"
       bgColor="gray.100"
       display="flex"
       flexDir="column"

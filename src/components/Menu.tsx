@@ -296,7 +296,7 @@ const Menu = () => {
               </Box>
             </Box>
           ))}
-          <Box justifyContent="center" display={['flex', null, 'none']}>
+          <Box justifyContent="center" display={['flex', null, 'none']} pb={28}>
             <IconButton
               aria-label="Close menu"
               mt={4}

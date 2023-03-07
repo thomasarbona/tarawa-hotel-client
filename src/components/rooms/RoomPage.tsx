@@ -81,8 +81,6 @@ const RoomPage: React.FC<RoomPageProps> = (props) => {
       | undefined
   )?.data;
 
-  console.log(breakpoint);
-
   const close = () => {
     router.replace('/#chambres', undefined, { scroll: false });
   };

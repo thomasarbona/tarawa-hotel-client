@@ -23,7 +23,7 @@ const Description = (props: DescriptionProps) => {
   const button2 = component.data?.atomicComponents[4] as ActionButton;
 
   return (
-    <Box display="flex" justifyContent="center">
+    <Box display="flex" justifyContent="center" bgColor="white">
       <Container
         maxWidth="container.xl"
         display="flex"

@@ -67,8 +67,6 @@ const OffersPage: React.FC<OffersPageProps> = (props) => {
         {pages.offers.map((offer) => {
           const defaultMedia = offer.medias?.[0];
 
-          console.log(offer);
-
           return (
             <Link
               key={offer._id}

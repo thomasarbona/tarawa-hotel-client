@@ -92,14 +92,23 @@ export default function Home(props: any) {
           alignItems="center"
           justifyContent="center"
         >
+          <Box
+            w="100%"
+            h="100%"
+            position="fixed"
+            top={0}
+            zIndex={-1}
+            alignSelf="flex-start"
+          >
+            <ImageSmooth
+              src={mainBackground}
+              alt="Tarawa Hotel Bg"
+              fill
+              style={{ objectFit: 'cover' }}
+              placeholder="blur"
+            />
+          </Box>
           <Logo width={logoWidth} />
-          <ImageSmooth
-            src={mainBackground}
-            alt="Tarawa Hotel Bg"
-            fill
-            style={{ objectFit: 'cover', zIndex: -1 }}
-            placeholder="blur"
-          />
         </Box>
         {content?.components?.map((component) => (
           <KustomComponent key={component.id} component={component} />
